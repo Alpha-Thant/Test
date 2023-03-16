@@ -1,18 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cardAdd, cardRemove } from "../redux/pokemonSlice";
 
 export default function CustomCard({data}) {
     
     const [selected, setSelected] = useState(false);
+    const { selectedCardList } = useSelector(state => state.pokemon);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const index = selectedCardList.findIndex((card) => card.id === data.item.id);
+        if(index > -1) {
+            setSelected(true);
+        } else {
+            setSelected(false);
+        }
+
+    },[selectedCardList])
 
     const onPressHandler = () => {
 
         if(selected) {
             // remove from list
-            dispatch(cardRemove(data.item.id));
+            dispatch(cardRemove({
+                id: data.item.id,
+                name: data.item.name,
+                price: data.item.cardmarket.prices.averageSellPrice,
+                number: data.item.number,
+                photo: data.item.images.large
+            }));
+            setSelected(false);
         } else {
             // add to the list
             dispatch(cardAdd({
@@ -22,8 +40,8 @@ export default function CustomCard({data}) {
                 number: data.item.number,
                 photo: data.item.images.large
             }));
+            setSelected(true);
         }
-        setSelected(!selected);
     }
 
     return (

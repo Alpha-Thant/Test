@@ -1,4 +1,4 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, FlatList, ScrollView, RefreshControl, Image } from "react-native";
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, FlatList, ScrollView, RefreshControl, Image, Pressable } from "react-native";
 import Header from "../components/Header";
 import { globalSytles } from "../styles/globalStyle";
 import { AntDesign } from '@expo/vector-icons'; 
@@ -7,12 +7,13 @@ import CustomCard from "../components/CustomCard";
 import CardModal from "../components/CartModal";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCardList, fetchPokemon, showModalUpdate } from "../redux/pokemonSlice";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PaidModal from "../components/PaidModal";
-
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function Home({ navigation }) {
     const { pokemons, status, showModal } = useSelector(state => state.pokemon);
+    const [ currentPage, setCurrentPage ] = useState(13);
 
     const dispatch = useDispatch()
 
@@ -23,6 +24,10 @@ export default function Home({ navigation }) {
 
     const onPressHandler = () => {
         navigation.goBack();
+    }
+
+    const showMoreItem = () => {
+        setCurrentPage(currentPage + 12);
     }
 
     return (
@@ -64,13 +69,24 @@ export default function Home({ navigation }) {
                 <View style={styles.cardContainer}>
                     <Text style={{marginBottom: 10}}>{status}</Text>
                     <ScrollView>
-                            {
-                                pokemons.slice(0, 10).map((item) => {
+                        {
+                            pokemons.slice(0, currentPage).map((item, index) => {
+                                if(index == (currentPage-1)) {
                                     return (
-                                        <CustomCard key={item.id} data={{item}}/>
+                                        // show more
+                                        <Pressable style={{ flexDirection:'row', paddingHorizontal: 100, paddingBottom: 100, paddingTop: 50}} key={index} onPress={showMoreItem}>
+                                            <FontAwesome style={{marginRight: 10, marginTop: 3}} name="search" size={12} color="grey" />
+                                            <Text style={{ color: 'grey'}}>Show more</Text>
+                                        </Pressable>
                                     )
-                                })
-                            }
+                                } else {
+                                    return (
+                                        <CustomCard key={index} data={{item}}/>
+                                    )
+                                }
+                                
+                            })
+                        }
                     </ScrollView>
                 </View>
 

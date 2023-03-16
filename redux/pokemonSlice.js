@@ -30,7 +30,8 @@ const pokemonSlice = createSlice({
 
         // It's paid and remove from the card
         state.selectedCardList = [];
-
+        state.totalPrice = 0;
+        state.totalCard = 0;
         state.showModal = false;
       }
       state.paidModal = action.payload;
@@ -41,20 +42,18 @@ const pokemonSlice = createSlice({
       state.totalPrice += action.payload.price;
     },
     cardRemove(state, action){
-      state.totalCard -= 1;
-      state.totalPrice -= action.payload.price;
-
-      if(state.totalPrice == NaN) {
-        state.totalPrice = 0;
-      }
-      const index = state.selectedCardList.findIndex((card) => card.id === action.payload);
+      const index = state.selectedCardList.findIndex((card) => card.id === action.payload.id);
 
       if(index > -1) {
         state.selectedCardList.splice(index, 1); // deleting
+        state.totalCard -= 1;
+        state.totalPrice -= action.payload.price;
       }
     },    
     clearCardList(state) {
       state.selectedCardList = [];
+      state.totalPrice = 0;
+      state.totalCard = 0;
     },
     totalCardAdd(state, action) {
       state.totalCard += action.payload;
