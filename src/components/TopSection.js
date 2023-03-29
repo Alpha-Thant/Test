@@ -74,10 +74,6 @@ export default function TopSection() {
                             value={selectedType}
                             onFocus={() => setIsFocusType(true)}
                             onBlur={() => setIsFocusType(false)}
-                            onChange={item => {
-                                setSelectedType(item.value);
-                                setIsFocusType(false);
-                            }}
                             />
                         </View>
                     </View>
@@ -97,10 +93,6 @@ export default function TopSection() {
                             value={selectedRarity}
                             onFocus={() => setIsFocusRarity(true)}
                             onBlur={() => setIsFocusRarity(false)}
-                            onChange={item => {
-                                setSelectedRarity(item.value);
-                                setIsFocusRarity(false);
-                            }}
                             />
                         </View>
                     </View>
@@ -120,10 +112,6 @@ export default function TopSection() {
                             value={selectedSet}
                             onFocus={() => setIsFocusSet(true)}
                             onBlur={() => setIsFocusSet(false)}
-                            onChange={item => {
-                                setSelectedSet(item.value);
-                                setIsFocusSet(false);
-                            }}
                             />
                         </View>
                     </View>
