@@ -5,9 +5,8 @@ export const globalSytles = StyleSheet.create({
     cardShadow: {
         marginTop: 10,
         width: 300,
-        height: 40,
+        height: 35,
         borderRadius: 16,
-        backgroundColor: 'transparent',
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
@@ -16,12 +15,9 @@ export const globalSytles = StyleSheet.create({
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
         elevation: 3,
+        backgroundColor: 'white'
     },
-    cardContainer: {
-        backgroundColor: '#fff',
-        borderRadius: 16,
-        overflow: 'hidden',
-    },
+
     input: {
         paddingVertical: 10,
         paddingHorizontal: 15,
